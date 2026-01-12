@@ -20,73 +20,76 @@
   <meta name="keywords" content="agence de voyage, visa, billet d'avion, voyage sur mesure, Terra Voyage">
   <meta name="author" content="Terra Voyage">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-         .modal { display: none; position: fixed; inset:0; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index:50; }
-         .modal-content { background: #111; padding: 1.5rem; border-radius: 1rem; max-width: 600px; width: 100%; }
-  </style>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <style>
-               @keyframes zoomIn {
-               0% { opacity: 0; transform: scale(0.8); }
-               100% { opacity: 1; transform: scale(1); }
-               }
-               .animate-zoomIn {
-               animation: zoomIn 1s ease forwards;
-               }
-  </style>
-  <style>
-         /* cacher scrollbar */
-         .scrollbar-none {
-         -ms-overflow-style: none;  
-         scrollbar-width: none;      
-         }
-         .scrollbar-none::-webkit-scrollbar {
-         display: none;              
-         }
-         /* Effet coverflow léger */
-         #mobileCarousel > div {
-         transform-style: preserve-3d;
-         transition: transform 0.3s ease;
-         }
-         #mobileCarousel > div:hover {
-         transform: scale(1.05) rotateY(0deg);
-         }
-  </style>
-  <style>
-            .tab-btn svg {
-            transition: transform 0.3s ease, color 0.3s ease;
-            }
-            .tab-btn:hover svg {
-            transform: translateY(-5px);
-            color: #f59e0b; /* Jaune/orange subtil */
-            }
-            .tab-btn span {
-            position: relative;
-            display: inline-block;
-            }
-            .tab-btn span::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            left: 0;
-            bottom: -4px;
-            background-color: #f59e0b;
-            transition: width 0.3s ease;
-            }
-            .tab-btn:hover span::after {
-            width: 100%;
-            }
-  </style>
-  <style>
-         @keyframes zoomIn {
-         from { opacity: 0; transform: scale(0.85); }
-         to { opacity: 1; transform: scale(1); }
-         }
-         .animate-zoomIn {
-         animation: zoomIn 1s ease forwards;
-         }
-  </style>
+ <style>
+/* ==========================
+   HERO SEARCH – TRIP TABS (TRANSPARENT)
+========================== */
+#heroForm {
+  position: relative;
+  margin-top: 3rem;
+  max-width: 6xl;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.3); /* semi-transparent */
+  backdrop-filter: blur(12px);          /* flou derrière */
+  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+  color: #111;
+  transition: all 0.3s ease;
+}
+
+/* TRIP TABS */
+.trip-tab input {
+  display: none;
+}
+
+.trip-tab span {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  background: rgba(243, 244, 246, 0.6); /* légèrement transparent */
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.trip-tab input:checked + span {
+  background: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 10px 30px rgba(220, 38, 38, 0.35);
+}
+
+/* BUTTONS HERO SEARCH */
+#heroForm button {
+  transition: all 0.3s ease;
+}
+
+#heroForm button:hover {
+  transform: scale(1.02);
+}
+
+/* SELECT HERO SEARCH */
+#heroForm select {
+  background: rgba(31, 41, 55, 0.85); /* bg semi-transparent pour select */
+  color: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+/* inputs & segments */
+#heroForm input {
+  background: rgba(255, 255, 255, 0.7); /* semi-transparent input */
+  color: #111;
+  border-radius: 1rem;
+  padding: 0.75rem 1rem;
+}
+</style>
 </head>
 
 <body class="bg-black text-white font-sans antialiased overflow-x-hidden">
@@ -168,39 +171,90 @@
         <h1 class="text-4xl md:text-6xl font-extrabold leading-tight opacity-0 animate-zoomIn">Voyagez autrement.<br class="hidden md:block">
         Avec élégance et précision.</h1>
         <p class="mt-5 text-gray-300 text-lg">Vols internationaux, hôtels, assurances et accompagnement personnalisé. Terra Voyage s’occupe de tout, avec rigueur et excellence.</p>
-        <form id="heroForm" onsubmit="openWhatsAppHero(event)" class="mt-8 max-w-6xl mx-auto bg-gray-900/80 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-2xl shadow-2xl grid grid-cols-1 md:grid-cols-7 gap-4 w-full" name="heroForm">
-          <div class="md:col-span-7 flex flex-wrap gap-4 text-sm text-gray-200">
-            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="tripType" value="Aller simple" checked onchange="toggleTrip(this)"> Aller simple</label> <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="tripType" value="Aller-retour" onchange="toggleTrip(this)"> Aller-retour</label> <label class="flex items-center gap-2 cursor-pointer"><label id="multiVilleLabel" data-trip="multi" class="flex items-center gap-2 cursor-pointer"><input type="radio" name="tripType" value="Multi-villes" onchange="toggleTrip(this)"> Multi-villes</label></label>
-          </div>
-          <div id="segmentsContainer" class="md:col-span-7 flex flex-col gap-3"></div>
-          <div id="multiBtns" class="md:col-span-7 flex gap-2 hidden">
-            <button type="button" onclick="addSegment()" class="px-4 py-2 text-sm bg-gray-700 hover:bg-red-600 rounded-lg text-white font-semibold transition">+ Segment</button> <button type="button" onclick="removeSegment()" class="px-4 py-2 text-sm bg-gray-700 hover:bg-red-600 rounded-lg text-white font-semibold transition">− Segment</button>
-          </div>
-          <div class="md:col-span-2">
-            <select id="passengersHero" class="w-full px-4 py-3 rounded-lg bg-gray-800 text-white text-sm focus:outline-none focus:ring-2 focus:ring-red-600">
-              <option>
-                1 passager
-              </option>
-              <option>
-                2 passagers
-              </option>
-              <option>
-                3 passagers
-              </option>
-              <option>
-                4 passagers
-              </option>
-              <option>
-                5 passagers
-              </option>
-            </select>
-          </div>
-          <div class="md:col-span-2">
-            <button type="submit" class="w-full px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-bold text-white transition transform hover:scale-[1.02]">Rechercher</button>
-          </div>
-          <form onsubmit="openWhatsAppHero(event)"></form>
-        </form>
-      </div>
+<form
+  id="heroForm"
+  onsubmit="openWhatsAppHero(event)"
+  class="relative mt-12 max-w-6xl mx-auto
+         bg-white/95 backdrop-blur
+         text-black
+         rounded-3xl
+         shadow-[0_30px_80px_rgba(0,0,0,0.25)]
+         flex flex-col
+         overflow-hidden"
+>
+
+  <!-- TYPE DE VOYAGE -->
+  <div class="flex justify-center gap-3 px-6 py-4 bg-gray-50 border-b">
+    <label class="trip-tab">
+      <input type="radio" name="tripType" value="Aller simple" checked onchange="toggleTrip(this)">
+      <span>Aller simple</span>
+    </label>
+
+    <label class="trip-tab">
+      <input type="radio" name="tripType" value="Aller-retour" onchange="toggleTrip(this)">
+      <span>Aller-retour</span>
+    </label>
+
+    <label class="trip-tab">
+      <input type="radio" name="tripType" value="Multi-villes" onchange="toggleTrip(this)">
+      <span>Multi-villes</span>
+    </label>
+  </div>
+
+  <!-- SEGMENTS -->
+  <div id="segmentsContainer" class="px-6 py-6 flex flex-col gap-4"></div>
+
+  <!-- BOUTONS MULTI -->
+  <div id="multiBtns" class="px-6 pb-4 flex gap-3 hidden">
+    <button
+      type="button"
+      onclick="addSegment()"
+      class="px-4 py-2 text-sm rounded-xl bg-gray-800 hover:bg-red-600 text-white font-semibold transition"
+    >
+      + Segment
+    </button>
+
+    <button
+      type="button"
+      onclick="removeSegment()"
+      class="px-4 py-2 text-sm rounded-xl bg-gray-800 hover:bg-red-600 text-white font-semibold transition"
+    >
+      − Segment
+    </button>
+  </div>
+
+  <!-- PASSAGERS + CTA -->
+  <div class="px-6 pb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+
+    <div class="md:col-span-2">
+      <select
+        id="passengersHero"
+        class="w-full px-5 py-4 rounded-2xl
+               bg-gray-900 text-white text-sm
+               focus:outline-none focus:ring-2 focus:ring-red-600"
+      >
+        <option>1 passager</option>
+        <option>2 passagers</option>
+        <option>3 passagers</option>
+        <option>4 passagers</option>
+        <option>5 passagers</option>
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="w-full px-6 py-4
+             bg-red-600 hover:bg-red-700
+             rounded-2xl
+             font-bold text-white
+             transition transform hover:scale-[1.03]"
+    >
+      Rechercher
+    </button>
+
+  </div>
+
+</form>
       <script>
             (function () {
             
@@ -826,8 +880,7 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script> 
   <script>
 
-
-         const swiper = new Swiper(".mySwiper", {
+        const swiper = new Swiper(".mySwiper", {
            slidesPerView: 4,
            spaceBetween: 30,
            loop: true,
@@ -909,7 +962,7 @@
           © 2025 Terra Voyage — Tous droits réservés
         </div>
       </footer>
-      <script src="assets/js/main.js" defer></script>
+      <script src="main.js" defer></script>
     </div>
   </footer>
 </body>
