@@ -619,16 +619,6 @@
     </div>
   </section>
   
-  <div style="max-width:728px; margin:20px auto; position:relative; padding-top:12.36%; background:#fff;">
-    <iframe
-        src="https://fr.trip.com/partners/ad/DB10207395?Allianceid=7181378&SID=288688982&trip_sub1="
-        style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;"
-        frameborder="0"
-        scrolling="no"
-        id="DB10207395">
-    </iframe>
-</div>
-
   
   <section id="destinations" class="py-20 bg-gray-950 text-white overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
@@ -751,17 +741,7 @@
            document.getElementById(id).classList.remove('flex');
          }
          
-         // Coverflow dynamique au scroll
-         mobileContainer.addEventListener('scroll', () => {
-           const cards = mobileContainer.querySelectorAll('div');
-           const center = mobileContainer.scrollLeft + mobileContainer.offsetWidth / 2;
-           cards.forEach(card => {
-             const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-             const offset = (cardCenter - center) / 10; // ajuster l'intensité
-             card.style.transform = `rotateY(${offset}deg) scale(1)`;
-           });
-         });
-  </script>
+          </script>
   <section id="about" class="py-20 bg-gray-50 text-gray-900">
     <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
       <div>
